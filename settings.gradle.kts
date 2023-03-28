@@ -13,6 +13,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Pixabay"
-include ':app'
-include ':domain'
-include ':data'
+include(
+    ":app",
+    ":domain",
+    ":data",
+)
