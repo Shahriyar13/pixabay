@@ -1,4 +1,5 @@
 plugins {
+    kotlin("kapt")
     id ("java-library")
     id ("org.jetbrains.kotlin.jvm")
 }
@@ -9,4 +10,5 @@ java {
 }
 dependencies {
     implementation(DomainImplementationDependencies.javaX)
+    implementation(DomainImplementationDependencies.kotlinX)
 }

@@ -4,6 +4,7 @@ object Versions {
     // Core
     const val androidCore = "1.9.0"
     const val javaX = "1"
+    const val kotlinVersion = "1.6.4"
 
     // Android
     const val lifeCycle = "2.5.1"
