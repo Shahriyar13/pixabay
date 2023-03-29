@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
 class FetchImagesUseCase(
     private val repository: ImageRepository
 ): FlowUseCase<FetchImageParams, List<PostEntity>>() {
-    override suspend fun execute(param: FetchImageParams): PixabayResult<Flow<List<PostEntity>>> = repository.getImage(param)
+    override suspend fun execute(param: FetchImageParams): Flow<PixabayResult<List<PostEntity>>> = repository.getImage(param)
 }

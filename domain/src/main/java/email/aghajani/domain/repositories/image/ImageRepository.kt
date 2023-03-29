@@ -7,5 +7,5 @@ import email.aghajani.domain.repositories.BaseRepository
 import kotlinx.coroutines.flow.Flow
 
 interface ImageRepository: BaseRepository {
-    suspend fun getImage(params: FetchImageParams): PixabayResult<Flow<List<PostEntity>>>
+    suspend fun getImage(params: FetchImageParams): Flow<PixabayResult<List<PostEntity>>>
 }
