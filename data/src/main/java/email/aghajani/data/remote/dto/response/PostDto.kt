@@ -1,6 +1,6 @@
 package email.aghajani.data.remote.dto.response
 
-data class ImageDto(
+data class PostDto(
     val id: Long,
     val pageURL: String,
     val type: String,
