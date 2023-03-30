@@ -24,4 +24,6 @@ object Versions {
     const val hilt = "2.44.2"
     const val hiltAndroidX = "1.0.0"
     const val hiltNavigationCompose = "1.1.0-alpha01"
+    const val paging = "3.1.1"
+    const val pagingCompose = "1.0.0-alpha18"
 }

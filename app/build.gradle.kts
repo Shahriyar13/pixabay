@@ -1,4 +1,4 @@
-import java.util.Properties
+import java.util.*
 
 plugins {
     kotlin("kapt")
@@ -85,10 +85,13 @@ dependencies {
     implementation(AppImplementationDependencies.composeUiToolingPreview)
     implementation(AppImplementationDependencies.hilt)
     implementation(AppImplementationDependencies.hiltNavigationCompose)
+    implementation(AppImplementationDependencies.paging)
+    implementation(AppImplementationDependencies.pagingCompose)
     kapt(AppKaptDependencies.hilt)
     kapt(AppKaptDependencies.hiltAndroidX)
     testImplementation(AppTestImplementationDependencies.jUnit)
     testImplementation(AppTestImplementationDependencies.hilt)
+    testImplementation(AppTestImplementationDependencies.paging)
     kapt(AppTestKaptDependencies.hilt)
     androidTestImplementation(AppAndroidTestImplementationDependencies.testJUnit)
     androidTestImplementation(platform(AppAndroidTestImplementationDependencies.composeBom))
