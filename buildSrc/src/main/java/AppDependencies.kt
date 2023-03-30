@@ -9,6 +9,8 @@ object AppImplementationDependencies {
     val lifeCycle by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifeCycle}" }
     val hilt by lazy { "com.google.dagger:hilt-android:${Versions.hilt}" }
     val hiltNavigationCompose by lazy { "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}" }
+    val paging by lazy { "androidx.paging:paging-runtime:${Versions.paging}" }
+    val pagingCompose by lazy { "androidx.paging:paging-compose:${Versions.pagingCompose}" }
 }
 
 object AppKaptDependencies {
@@ -19,6 +21,7 @@ object AppKaptDependencies {
 object AppTestImplementationDependencies {
     val jUnit by lazy { "junit:junit:${Versions.jUnit}" }
     val hilt by lazy { "com.google.dagger:hilt-android-testing:${Versions.hilt}" }
+    val paging by lazy { "androidx.paging:paging-common:${Versions.paging}" }
 }
 
 object AppTestKaptDependencies {
