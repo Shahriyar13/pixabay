@@ -3,6 +3,7 @@ package email.aghajani.data.remote.dto.mapper
 import email.aghajani.data.remote.dto.response.PostDto
 import email.aghajani.domain.entities.ImageEntity
 import email.aghajani.domain.entities.PostEntity
+import email.aghajani.domain.entities.UserEntity
 import email.aghajani.domain.entities.enums.MediaTypeEnum
 
 fun PostDto.toEntity() = PostEntity(
@@ -31,4 +32,9 @@ fun PostDto.toEntity() = PostEntity(
     collections = collections,
     likes = likes,
     comments = comments,
+    user = UserEntity(
+      id = user_id,
+      userName = user,
+      imageUrl = userImageURL
+    ),
 )

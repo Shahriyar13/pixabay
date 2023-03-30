@@ -15,4 +15,5 @@ data class PostEntity(
     val collections: Long,
     val likes: Long,
     val comments: Long,
+    val user: UserEntity,
 )
