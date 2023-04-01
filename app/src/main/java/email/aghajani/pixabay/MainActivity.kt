@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
+import email.aghajani.pixabay.ui.features.posts.PostsScreen
 import email.aghajani.pixabay.ui.theme.PixabayTheme
 
 @AndroidEntryPoint
@@ -24,7 +25,7 @@ class MainActivity: ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    PostsScreen()
                 }
             }
         }

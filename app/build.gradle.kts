@@ -74,6 +74,7 @@ android {
 
 dependencies {
     implementation(project(mapOf("path" to ":domain")))
+    implementation(project(mapOf("path" to ":data")))//TODO: fix it, after remove repository cannot be provided
 
     implementation(AppImplementationDependencies.androidCore)
     implementation(AppImplementationDependencies.lifeCycle)

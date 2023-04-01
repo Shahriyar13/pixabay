@@ -18,8 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun PostsScreen() {
-    val viewModel = hiltViewModel<PostsViewModel>()
+fun PostsScreen(
+) {
+    val viewModel: PostsViewModel = hiltViewModel()
 
     val posts = viewModel.posts.collectAsState()
 
