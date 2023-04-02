@@ -9,7 +9,7 @@ import email.aghajani.domain.entities.enums.MediaTypeEnum
 fun PostDto.toEntity() = PostEntity(
     id = id,
     pageURL = pageURL,
-    type = MediaTypeEnum.valueOf(type),
+    type = MediaTypeEnum.getEnum(type),
     tags = tags.takeIf { it.isNotEmpty() && it.contains(",") }
         ?.split(",")?.map { it.trim() } ?: emptyList(),
     imagePreview = ImageEntity(

@@ -21,6 +21,9 @@ object Versions {
 
     // Third-Party
     const val retrofit = "2.9.0"
+    const val moshi = "1.14.0"
+    const val loggingInterceptor = "4.10.0"
+    const val timberLogger = "5.0.1"
     const val hilt = "2.44.2"
     const val hiltAndroidX = "1.0.0"
     const val hiltNavigationCompose = "1.1.0-alpha01"

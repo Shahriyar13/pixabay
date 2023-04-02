@@ -22,7 +22,7 @@ class PostsViewModel @Inject constructor(
     private val fetchImagesUseCase: FetchImagesUseCase,
 ): ViewModel() {
 
-    private val fetchImageParams = FetchImageParams("Fruits")
+    val fetchImageParams = FetchImageParams("Fruits")
 
     private val _posts: MutableStateFlow<List<PostEntity>> = MutableStateFlow(emptyList())
     val posts: StateFlow<List<PostEntity>> get() = _posts
@@ -55,22 +55,24 @@ class PostsViewModel @Inject constructor(
     private fun getImages(params: FetchImageParams) {
         _loading = true
         viewModelScope.launch {
-            when (val res = fetchImagesUseCase.execute(params)) {
-                is PixabayResult.Success<*> -> {
-                    if (fetchImageParams.page == 1) {
-                        _posts.value = (res.data as? List<PostEntity> ?: emptyList())
-                    } else {
-                        _posts.value += (res.data as? List<PostEntity> ?: emptyList())
+            fetchImagesUseCase.execute(params).collect { result ->
+                when (result) {
+                    is PixabayResult.Success -> {
+                        if (fetchImageParams.page == 1) { _posts.value =
+                                (result.data as List<*>).filterIsInstance(PostEntity::class.java)
+                        } else {
+                            _posts.value += (result.data as List<*>).filterIsInstance(PostEntity::class.java)
+                        }
+                        _loading = false
                     }
-                    _loading = false
-                }
-                is PixabayResult.Error<*> -> {
-                    _error = res.errorMessage
-                    _loading = false
-                }
-                else -> {
-                    _error = "Error"
-                    _loading = false
+                    is PixabayResult.Error -> {
+                        _error = result.errorMessage
+                        _loading = false
+                    }
+                    else -> {
+                        _error = "Error"
+                        _loading = false
+                    }
                 }
             }
         }

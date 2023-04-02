@@ -1,4 +1,4 @@
-import java.util.Properties
+import java.util.*
 
 plugins {
     kotlin("kapt")
@@ -50,6 +50,8 @@ dependencies {
     implementation(DataImplementationDependencies.androidCore)
     implementation(DataImplementationDependencies.retrofit)
     implementation(DataImplementationDependencies.gsonByRetrofit)
+    implementation(DataImplementationDependencies.loggingInterceptor)
+    implementation(DataImplementationDependencies.timberLogger)
     implementation(DataImplementationDependencies.hilt)
     kapt(DataKaptDependencies.hilt)
     testImplementation(DataTestImplementationDependencies.jUnit)
