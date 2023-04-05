@@ -77,13 +77,14 @@ dependencies {
     implementation(project(mapOf("path" to ":data")))//TODO: fix it, after remove repository cannot be provided
 
     implementation(AppImplementationDependencies.androidCore)
-    implementation(AppImplementationDependencies.lifeCycle)
     implementation(platform(AppImplementationDependencies.composeBom))
     implementation(AppImplementationDependencies.activityCompose)
     implementation(AppImplementationDependencies.viewmodelCompose)
     implementation(AppImplementationDependencies.composeMaterial)
     implementation(AppImplementationDependencies.composeUi)
     implementation(AppImplementationDependencies.composeUiToolingPreview)
+    implementation(AppImplementationDependencies.lifeCycle)
+    implementation(AppImplementationDependencies.lifeCycleCompose)
     implementation(AppImplementationDependencies.hilt)
     implementation(AppImplementationDependencies.hiltNavigationCompose)
     implementation(AppImplementationDependencies.paging)

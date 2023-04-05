@@ -6,6 +6,7 @@ object AppImplementationDependencies {
     val composeUiToolingPreview by lazy { "androidx.compose.ui:ui-tooling-preview" }
     val activityCompose by lazy { "androidx.activity:activity-compose:${Versions.activityCompose}" }
     val viewmodelCompose by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.viewmodelCompose}" }
+    val lifeCycleCompose by lazy { "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifeCycle}" }
     val lifeCycle by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifeCycle}" }
     val hilt by lazy { "com.google.dagger:hilt-android:${Versions.hilt}" }
     val hiltNavigationCompose by lazy { "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}" }
