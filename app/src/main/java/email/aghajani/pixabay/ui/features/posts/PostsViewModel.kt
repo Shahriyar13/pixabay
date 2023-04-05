@@ -1,80 +1,58 @@
 package email.aghajani.pixabay.ui.features.posts
 
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import email.aghajani.domain.common.PixabayResult
 import email.aghajani.domain.entities.PostEntity
-import email.aghajani.domain.entities.enums.OrderEnum
-import email.aghajani.domain.entities.params.FetchImageParams
-import email.aghajani.domain.usecases.image.FetchImagesUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class PostsViewModel @Inject constructor(
-    private val fetchImagesUseCase: FetchImagesUseCase,
+    private val postsPagingSource: PostsPagingSource,
 ): ViewModel() {
 
-    val fetchImageParams = FetchImageParams("Fruits")
+    private val _search = MutableStateFlow("Fruits")
+    val search = _search.asStateFlow()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = "",
+        )
 
-    private val _posts: MutableStateFlow<List<PostEntity>> = MutableStateFlow(emptyList())
-    val posts: StateFlow<List<PostEntity>> get() = _posts
+    private val _isSearchShowing = MutableStateFlow(false)
 
-    private var _loading by mutableStateOf(false)
-    val loading = derivedStateOf { _loading }
+    val isSearchShowing = _isSearchShowing.asStateFlow()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = false,
+        )
 
-    private var _error by mutableStateOf<String?>(null)
-    val error = derivedStateOf { _error }
-
-    init {
-        getImages(fetchImageParams)
+    fun setSearch(query: String) {
+        _search.value = query
     }
 
-    fun changeParams(
-        query: String? = fetchImageParams.query,
-        order: OrderEnum = fetchImageParams.order,
-        isSafeSearchOn: Boolean = fetchImageParams.isSafeSearch,
-    ) {
-        _posts.value = mutableListOf()
-        fetchImageParams.page = 1
-
-        fetchImageParams.query = query
-        fetchImageParams.order = order
-        fetchImageParams.isSafeSearch = isSafeSearchOn
-
-        getImages(fetchImageParams)
+    fun toggleIsSearchShowing() {
+        _isSearchShowing.value = !_isSearchShowing.value
     }
 
-    private fun getImages(params: FetchImageParams) {
-        _loading = true
-        viewModelScope.launch {
-            fetchImagesUseCase.execute(params).collect { result ->
-                when (result) {
-                    is PixabayResult.Success -> {
-                        if (fetchImageParams.page == 1) { _posts.value =
-                                (result.data as List<*>).filterIsInstance(PostEntity::class.java)
-                        } else {
-                            _posts.value += (result.data as List<*>).filterIsInstance(PostEntity::class.java)
-                        }
-                        _loading = false
-                    }
-                    is PixabayResult.Error -> {
-                        _error = result.errorMessage
-                        _loading = false
-                    }
-                    else -> {
-                        _error = "Error"
-                        _loading = false
-                    }
-                }
-            }
-        }
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    val posts: Flow<PagingData<PostEntity>> = search.debounce(1000).flatMapLatest { query ->
+        postsPagingSource.searchParams.query = query
+        Pager(
+            PagingConfig(
+                pageSize = 10,
+                prefetchDistance = 2,
+                initialLoadSize = 10,
+                enablePlaceholders = true
+            ), initialKey = 1
+        ) { postsPagingSource }.flow.cachedIn(viewModelScope)
     }
 }
