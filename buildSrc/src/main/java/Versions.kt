@@ -29,4 +29,5 @@ object Versions {
     const val hiltNavigationCompose = "1.1.0-alpha01"
     const val paging = "3.1.1"
     const val pagingCompose = "1.0.0-alpha18"
+    const val coilCompose = "2.3.0"
 }

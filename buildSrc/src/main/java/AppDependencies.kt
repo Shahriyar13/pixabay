@@ -11,6 +11,7 @@ object AppImplementationDependencies {
     val hiltNavigationCompose by lazy { "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}" }
     val paging by lazy { "androidx.paging:paging-runtime:${Versions.paging}" }
     val pagingCompose by lazy { "androidx.paging:paging-compose:${Versions.pagingCompose}" }
+    val coilCompose by lazy { "io.coil-kt:coil-compose:${Versions.coilCompose}" }
 }
 
 object AppKaptDependencies {

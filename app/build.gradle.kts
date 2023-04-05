@@ -88,6 +88,7 @@ dependencies {
     implementation(AppImplementationDependencies.hiltNavigationCompose)
     implementation(AppImplementationDependencies.paging)
     implementation(AppImplementationDependencies.pagingCompose)
+    implementation(AppImplementationDependencies.coilCompose)
     kapt(AppKaptDependencies.hilt)
     kapt(AppKaptDependencies.hiltAndroidX)
     testImplementation(AppTestImplementationDependencies.jUnit)
