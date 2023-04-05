@@ -7,12 +7,11 @@ object Versions {
     const val kotlinVersion = "1.6.4"
 
     // Android
-    const val lifeCycle = "2.5.1"
-    const val composeMaterial = "1.0.1"
-    const val activityCompose = "1.6.1"
-    const val viewmodelCompose = "2.5.1"
-    const val composeBom = "2023.01.00"
-    const val composeCompiler = "1.4.1"
+    const val lifeCycle = "2.6.1"
+    const val activityCompose = "1.7.0"
+    const val viewmodelCompose = "2.6.1"
+    const val composeBom = "2023.03.00"
+    const val composeCompiler = "1.4.4"
 
     // Test
     const val jUnit = "4.13.2"
