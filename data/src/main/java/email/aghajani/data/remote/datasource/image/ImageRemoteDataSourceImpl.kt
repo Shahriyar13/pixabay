@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ImageRemoteDataSourceImpl @Inject constructor(
@@ -34,14 +35,14 @@ class ImageRemoteDataSourceImpl @Inject constructor(
             }
         }.flowOn(ioDispatcher)
 
-    override suspend fun fetchById(id: Long): PixabayResult<PostEntity> {
-        val res = imageApi.fetchImageById(
-            id = id,
-        )
-        return when (val result = Converter.createFromResponse(res)) {
-            is PixabayResult.Success -> (PixabayResult.Success(result.data?.map { it.toEntity() }?.firstOrNull()))
-            is PixabayResult.Error -> (PixabayResult.Error(result.errorMessage))
-            else -> (PixabayResult.Error("Unknown"))
+    override suspend fun fetchById(id: Long): PixabayResult<PostEntity> =
+        withContext(ioDispatcher) {
+            val res = imageApi.fetchImageById(id = id)
+            when (val result = Converter.createFromResponse(res)) {
+                is PixabayResult.Success -> (PixabayResult.Success(result.data?.map { it.toEntity() }
+                    ?.firstOrNull()))
+                is PixabayResult.Error -> (PixabayResult.Error(result.errorMessage))
+                else -> (PixabayResult.Error("Unknown"))
+            }
         }
-    }
 }
