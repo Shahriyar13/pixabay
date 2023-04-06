@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ImageRemoteDataSource {
     suspend fun fetch(params: FetchImageParams): Flow<PixabayResult<List<PostEntity>>>
+    suspend fun fetchById(id: Long): PixabayResult<PostEntity>
 }

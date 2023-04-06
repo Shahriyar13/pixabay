@@ -19,4 +19,10 @@ interface ImageApi {
         @Query("key") apiKey: String = BuildConfig.API_KEY
     ): Response<ServerResponseDto<List<PostDto>>>
 
+    @GET("api")
+    suspend fun fetchImageById(
+        @Query("id") id: Long,
+        @Query("key") apiKey: String = BuildConfig.API_KEY
+    ): Response<ServerResponseDto<List<PostDto>>>
+
 }

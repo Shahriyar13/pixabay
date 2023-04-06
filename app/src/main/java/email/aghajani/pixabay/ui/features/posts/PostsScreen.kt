@@ -1,11 +1,14 @@
 package email.aghajani.pixabay.ui.features.posts
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,17 +19,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import email.aghajani.domain.entities.PostEntity
 import email.aghajani.domain.entities.UserEntity
+import email.aghajani.pixabay.Roots
 import email.aghajani.pixabay.ui.common.*
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun PostsScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: PostsViewModel = hiltViewModel()
 ) {
@@ -83,11 +89,13 @@ fun PostsScreen(
                 columns = GridCells.Fixed(2)
             ) {
                 items(count = res.itemCount) { index ->
-                    res[index]?.let {
+                    res[index]?.let { post ->
                         PostItem(
-                            post = it,
-                            modifier = Modifier.padding(1.dp),
-                        )
+                            post = post,
+                            modifier = Modifier.padding(1.dp)
+                        ) {
+                            navController.navigate("${Roots.PostDetailsScreenPath}/${post.id}")
+                        }
                     }
                 }
                 res.apply {
@@ -116,8 +124,10 @@ fun PostsScreen(
 }
 
 @Composable
-fun PostItem(post: PostEntity, modifier: Modifier = Modifier) {
-    Box(modifier) {
+fun PostItem(post: PostEntity, modifier: Modifier = Modifier, onClick: (PostEntity) -> Unit) {
+    Box(
+        modifier = modifier.clickable { onClick(post) }
+    ) {
         AsyncImage(
             modifier = Modifier
                 .fillMaxSize()
@@ -134,26 +144,6 @@ fun PostItem(post: PostEntity, modifier: Modifier = Modifier) {
                 .background(Color.White.copy(alpha = 0.4f))
                 .fillMaxWidth(),
         )
-        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
-            Row(
-                modifier = Modifier
-                    .background(Color.Black.copy(alpha = 0.3f))
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                TextWithVectorIcon(
-                    text = post.likes.toString(),
-                    textColor = Color.White,
-                    vectorImage = Icons.Default.ThumbUp,
-                )
-                TextWithVectorIcon(
-                    text = post.downloads.toString(),
-                    textColor = Color.White,
-                    vectorImage = Icons.Default.ShoppingCart,
-                )
-            }
-        }
-
     }
 }
 
@@ -166,25 +156,3 @@ fun UserInfo(user: UserEntity, modifier: Modifier = Modifier) {
         textColor = Color.Black
     )
 }
-
-//@Composable
-//fun UserInfo(user: UserEntity, modifier: Modifier = Modifier) {
-//    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
-//        AsyncImage(
-//            modifier = Modifier
-//                .size(25.dp)
-//                .border(2.dp, Color.Gray, CircleShape)
-//                .clip(CircleShape)
-//                .padding(4.dp)
-//                .background(Color.Gray),
-//            alignment = Alignment.Center,
-//            model = user.imageUrl,
-//            contentDescription = user.userName,
-//            contentScale = ContentScale.Crop,
-//        )
-//        Text(
-//            modifier = Modifier.height(22.dp),
-//            text = user.userName,
-//        )
-//    }
-//}
