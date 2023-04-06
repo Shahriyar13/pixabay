@@ -14,4 +14,7 @@ class ImageRepositoryImpl @Inject constructor(
     override suspend fun getImage(params: FetchImageParams): Flow<PixabayResult<List<PostEntity>>> =
         imageRemoteDataSource.fetch(params)
 
+    override suspend fun getImageById(id: Long): PixabayResult<PostEntity> =
+        imageRemoteDataSource.fetchById(id)
+
 }

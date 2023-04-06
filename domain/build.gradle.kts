@@ -10,5 +10,5 @@ java {
 }
 dependencies {
     implementation(DomainImplementationDependencies.javaX)
-    implementation(DomainImplementationDependencies.kotlinX)
+    implementation(DomainImplementationDependencies.kotlinCoroutines)
 }

@@ -33,4 +33,15 @@ class ImageRemoteDataSourceImpl @Inject constructor(
                 else -> emit(PixabayResult.Error("Unknown"))
             }
         }.flowOn(ioDispatcher)
+
+    override suspend fun fetchById(id: Long): PixabayResult<PostEntity> {
+        val res = imageApi.fetchImageById(
+            id = id,
+        )
+        return when (val result = Converter.createFromResponse(res)) {
+            is PixabayResult.Success -> (PixabayResult.Success(result.data?.map { it.toEntity() }?.firstOrNull()))
+            is PixabayResult.Error -> (PixabayResult.Error(result.errorMessage))
+            else -> (PixabayResult.Error("Unknown"))
+        }
+    }
 }
